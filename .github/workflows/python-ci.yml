@@ -1,0 +1,17 @@
+name: python-ci
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  steps:
+    -uses: actions/checkout@v2
+    -name: python install
+    uses: actions/setup-python@v2
+    with:
+      python-version: 3.9
+
+    -name: install dependencies
+    run: pip install pytest
+    
+    -name: käivitame testid
+    run: pytest
