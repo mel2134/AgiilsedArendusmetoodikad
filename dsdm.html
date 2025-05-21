@@ -6,7 +6,6 @@
     <title>Simple Weather App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -26,16 +25,12 @@
 
         button {
             padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #ffffff;
+            color: #000000;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
         }
 
         .weather-info {
@@ -85,20 +80,20 @@
 
             errorMessage.textContent = '';
 
-            const key = "180c6d7ce4a39c86ef2ec0ffd9054452";
-            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=metric`;
+            const apiKey = "WMB6TMRW43KZPHAS6L8UHCN2S";
+            const apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${apiKey}&contentType=json`;
 
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.cod === '404') {
+                    if (data.error) {
                         errorMessage.textContent = "Location not found!";
                         weatherInfo.style.display = 'none';
                     } else {
                         weatherInfo.style.display = 'block';
-                        locationName.textContent = `${data.name}, ${data.sys.country}`;
-                        temperature.textContent = `Temperature: ${data.main.temp}°C`;
-                        condition.textContent = `Condition: ${data.weather[0].description}`;
+                        locationName.textContent = `${data.resolvedAddress}`;
+                        temperature.textContent = `Temperature: ${data.currentConditions.temp}°C`;
+                        condition.textContent = `Condition: ${data.currentConditions.conditions}`;
                     }
                 })
                 .catch(() => {
